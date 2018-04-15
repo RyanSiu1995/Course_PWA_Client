@@ -13,10 +13,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "build-pwa": "react-scripts build && cp public/manifest.json public/favicon.ico build/ && sw-precache --navigate-fallback='index.html' --root='build/' --static-file-globs='build/**/!(*map*)'"
+    "build-pwa": "react-scripts build && workbox generateSW workbox-config.js"
   },
   "devDependencies": {
     "react-scripts": "1.1.4",
-    "sw-precache": "^5.2.1"
+    "workbox-cli": "^3.1.0"
   }
 }
