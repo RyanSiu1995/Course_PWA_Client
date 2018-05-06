@@ -1,0 +1,9 @@
+backend:
+  build: ./backend
+web:
+  build: .
+  command: node private/server.js
+  links:
+    - backend
+  ports: 
+    - "8080:8080"
