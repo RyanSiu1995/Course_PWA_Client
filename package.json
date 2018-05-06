@@ -5,7 +5,9 @@
   "dependencies": {
     "express": "^4.16.3",
     "react": "^16.3.1",
-    "react-dom": "^16.3.1"
+    "react-dom": "^16.3.1",
+    "tcp-ping": "^0.1.1",
+    "websocket": "^1.0.26"
   },
   "scripts": {
     "up": "node ./private/server.js",
