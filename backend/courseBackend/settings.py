@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'courseDetails'
+    'courseDetails',
+    'notification',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -128,3 +130,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+
+ASGI_APPLICATION = "notification.routing.application"
