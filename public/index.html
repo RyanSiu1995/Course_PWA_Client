@@ -12,11 +12,54 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <!-- Import the service worker -->
     <script>
+      function arrayBufferToBase64(buffer) {
+        let binary = '';
+        let bytes = new Uint8Array(buffer);
+        let len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+      }
       if ('serviceWorker' in navigator) {
           navigator.serviceWorker
           .register('sw.js')
+          .then(function(reg) {
+            // Subscribe the push manager
+            reg.pushManager.getSubscription().then(function(sub) {
+              if (sub === null) {
+                reg.pushManager.subscribe({
+                  userVisibleOnly: true
+                }).then(function(sub) {
+                  // TODO Send the url to django
+                  console.log({
+                    endpoint: sub.endpoint,
+                    keys: {
+                      pd256dh: arrayBufferToBase64(sub.getKey('p256dh')),
+                      auth: arrayBufferToBase64(sub.getKey('auth'))
+                    }
+                  });
+                }).catch(function(e) {
+                  if (Notification.permission === 'denied') {
+                    console.warn('Permission for notifications was denied');
+                  } else {
+                    console.error('Unable to subscribe to push', e);
+                  }
+                });
+              } else {
+                // Delete after the app completed
+                console.log({
+                  endpoint: sub.endpoint,
+                  keys: {
+                    pd256dh: arrayBufferToBase64(sub.getKey('p256dh')),
+                    auth: arrayBufferToBase64(sub.getKey('auth'))
+                  }
+                });
+              }
+            })
+          })
           .catch(function(err) {
-              console.log(err);
+            console.log(err);
           });
       }
     </script>
