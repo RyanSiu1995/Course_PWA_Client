@@ -7,8 +7,11 @@ python3 ./manage.py runserver
 
 ## Important parameter
 ```json
-{
+[{
     "username": "group20",
     "password": "csci4140"
-}
+}, {
+    "username": "frontend",
+    "password": "password"
+}]
 ```
