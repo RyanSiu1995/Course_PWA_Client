@@ -10,11 +10,21 @@ var socketConnection;
 var serverKey = 'AAAAv0b6qUo:APA91bHH6ogyI5jVz7VOuYq6_oKpJOxBts9tUnnrOj_NBh2uy-Ea0BF6ZkcG4ei37TRm3fmjw_vsmDzMUK066SfZTDnThtXgdA-NBV-7Al21EQmE-qwrivzKuYdpymfoJcVNZkqs3A96';
 const webpush = require('web-push');
 webpush.setGCMAPIKey(serverKey);
-
+// Server setting
 const path = require('path');
 const buildPath = path.resolve(__dirname, '../build');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 app.use('/', express.static(buildPath));
+
+app.post('/subscribe', function(req, res) {
+    const subObj = req.body;
+    socketConnection.sendUTF(JSON.stringify(subObj));
+    res.send('Subscribed');
+});
 
 app.get('/go', function(req, res) {
     const pushSubscription = {
@@ -66,11 +76,17 @@ client.on('connect', function(connection) {
     
     function sendToServer() {
         if (connection.connected) {
-            var number = Math.round(Math.random() * 0xFFFFFF);
-            connection.sendUTF(number.toString());
+            const pushSubscription = {
+                endpoint: 'https://android.googleapis.com/gcm/send/fjeF6OZWG2Y:APA91bFXFQT-PrVYU1RCZwPSvq3vLFnTg78PH3Khu92fyOa8CwFJVj-rSBruEuY8vC8i1dQOTPLDGL3ealL5HxID0C1Tt-r7QLWowiWXLxPqF0ZxleEj4uEgzXYluVdOtpgZNuD-ai6G',
+                keys: {
+                    p256dh: "BArxCil4sJ+gJECjRGUyfqA1AnNKRHfzTdOxt5TIP9f8B6YaezXYtLQ8EK1T0WFsY5OemlKHbMOP4/5v4U8MKJE=",
+                    auth: "1gDbmdI151x3KTV+5LxZig=="
+                }
+            };
+            connection.sendUTF(JSON.stringify(pushSubscription));
         }
     }
-    sendToServer();
+    // sendToServer();
 });
 // Start the connection to websocket
 client.connect('ws://backend:80/ws/');
