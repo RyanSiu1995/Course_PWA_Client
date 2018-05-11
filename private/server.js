@@ -34,15 +34,7 @@ app.get('/go', function(req, res) {
             auth: "1gDbmdI151x3KTV+5LxZig=="
         }
     };
-    webpush.sendNotification(
-        pushSubscription,
-        'hello'
-    ).then(res => {
-        console.log(res);
-    })
-    .catch(res => {
-        console.log(res);
-    });
+    
     res.send('hello');
 });
 
@@ -70,7 +62,24 @@ client.on('connect', function(connection) {
     connection.on('message', function(message) {
         // TODO receive the server push
         if (message.type === 'utf8') {
-            console.log("Received: '" + message.utf8Data + "'");
+            console.log(message);
+            const body = JSON.parse(message.utf8Data);
+            const pushSubscription = {
+                endpoint: body.endpoint,
+                keys: {
+                    p256dh: body.p256dh,
+                    auth: body.auth
+                }
+            };
+            webpush.sendNotification(
+                pushSubscription,
+                body.message
+            ).then(res => {
+                console.log(res);
+            })
+            .catch(res => {
+                console.log(res);
+            });
         }
     });
     
