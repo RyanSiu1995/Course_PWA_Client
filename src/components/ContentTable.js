@@ -24,30 +24,14 @@ class ContentTable extends Component {
       url: url
     })
       .then(function (response) {
-        const fakeResponse = [
-          {
-            name: 'L1',
-            date: '11-11-11',
-            downloaded: true
-          },
-          {
-            name: 'L2',
-            date: '11-11-11',
-            downloaded: true
-          },
-          {
-            name: 'L3',
-            date: '11-11-11',
-            downloaded: false
-          }
-        ];
+
         console.log(response);
-        self.setState({ tableItems: fakeResponse });
+        self.setState({ tableItems: response.data });
 
       })
       .catch(function (error) {
         console.log(error);
-        //self.setState({ error: error.response.data });
+        self.setState({ error: error.response.data });
 
       });
   }
@@ -81,7 +65,7 @@ class ContentTable extends Component {
             </tr>
           </thead>
           <tbody>
-          {tableItems.map(item => {
+          {  tableItems && tableItems.map(item => {
             return (
                 <tr>
                   {tableHeaders.map(tableHeader => {
@@ -93,6 +77,7 @@ class ContentTable extends Component {
                 </tr>
             );
           })}
+
           </tbody>
 
         </Table>

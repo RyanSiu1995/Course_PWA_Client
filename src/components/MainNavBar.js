@@ -39,6 +39,7 @@ export default class MainNavBar extends React.Component {
       <div>
         <Navbar color="dark" dark expand="md">
 
+
           {/*
             <NavbarBrand>
             <DownloadableModal buttonLabel="Offline" />
