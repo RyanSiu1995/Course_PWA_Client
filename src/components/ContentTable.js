@@ -10,13 +10,19 @@ class ContentTable extends Component {
     this.state = { tableItems: [] };
 
     this.fetchData = this.fetchData.bind(this);
-    this.fetchData('localhost:8000'); // just some example url for now
+
+    const url = '/course/' + props.resourceUrl || '' + '?format=json';
+    console.log(url);
+    this.fetchData(url);
 
   }
 
   fetchData(url) {
     const self = this;
-    axios.get(url)
+    axios({
+      method: 'get',
+      url: url
+    })
       .then(function (response) {
         const fakeResponse = [
           {
@@ -35,68 +41,70 @@ class ContentTable extends Component {
             downloaded: false
           }
         ];
-
+        console.log(response);
         self.setState({ tableItems: fakeResponse });
 
       })
       .catch(function (error) {
         console.log(error);
-        const fakeResponse = [
-          {
-            name: 'L1',
-            date: '11-11-11',
-            downloaded: true
-          },
-          {
-            name: 'L2',
-            date: '11-11-11',
-            downloaded: true
-          },
-          {
-            name: 'L3',
-            date: '11-11-11',
-            downloaded: false
-          }
-        ];
+        //self.setState({ error: error.response.data });
 
-        self.setState({ tableItems: fakeResponse });
-        self.setState({ error });
       });
   }
 
-  render() {
-    const { tableItems } = this.state;
+  renderTable(tableHeaders, tableItems, error) {
+    if (error) {
+      return (
+        <div>
+          <h5>
+            There are some problems with Internet connection.
+        </h5>
+          <p>{error}</p>
+        </div>
+
+      );
+    }
 
     return (
+
       <div className="container">
-        <br />
-        <Table style={tableStyle} >
+
+        <Table striped style={tableStyle} >
           <thead>
             <tr>
-              <th>Lecture</th>
-              <th>Date</th>
-              <th>Link</th>
+              {tableHeaders.map(tableHeader => {
+                return (
+                  <th>{tableHeader}</th>
+                );
+              })}
               <th>Offline</th>
             </tr>
           </thead>
-
+          <tbody>
           {tableItems.map(item => {
             return (
-              <tbody >
                 <tr>
-                  <td>{item.name}</td>
-                  <td>{item.date}</td>
-                  <td>{item.link || '--'}</td>
-                  <td><DownloadableCheckBox id={item.name + '_' + item.date} /></td>
+                  {tableHeaders.map(tableHeader => {
+                    return (
+                      <td>{item[tableHeader] || '--'}</td>
+                    );
+                  })}
+                  <td><DownloadableCheckBox id={item.id + '_' + this.props.resourceUrl} /></td>
                 </tr>
-              </tbody>
             );
           })}
+          </tbody>
 
         </Table>
 
       </div>
     );
+  }
+
+  render() {
+    const { tableItems, error } = this.state;
+    const tableHeaders = this.props.tableHeaders;
+    return this.renderTable(tableHeaders, tableItems, error);
   }
 }
 
@@ -104,5 +112,6 @@ class ContentTable extends Component {
 const tableStyle = {
   textAlign: 'center',
 };
+
 
 export default ContentTable;

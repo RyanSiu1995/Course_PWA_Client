@@ -5,7 +5,7 @@ import ContentTable from './components/ContentTable';
 
 const navItems = [{
   name: 'Course info',
-  route: 'course_info'
+  route: 'info'
 },
 {
   name: 'Lectures',
@@ -24,6 +24,10 @@ const navItems = [{
   route: 'staff'
 }];
 
+const lectureTableHeaders = ['name', 'date', 'upload'];
+const assignmentTableHeaders = ['name', 'submissionDate', 'upload'];
+const tutorialTableHeaders = ['name', 'date', 'upload'];
+
 
 class App extends Component {
   render() {
@@ -33,9 +37,27 @@ class App extends Component {
           <div>
             <MainNavBar navItems={navItems} brandName="CSCI 4140" />
             <Route path="/"/>  {/* make course info page default option*/}
-            <Route exact path="/lectures" component={ContentTable} />
-            <Route exact path="/assignments" component={ContentTable} />
+            {/*
+              <Route exact path="/lectures" component={LectureTable} />
+            */}
+            
+            <Route
+              exact path="/lectures"
+              render={(props) => <ContentTable {...props} resourceUrl="lt_note" tableHeaders={lectureTableHeaders} />}
+            />
+            <Route
+              exact path="/assignments"
+              render={(props) => <ContentTable {...props} resourceUrl="assignment" tableHeaders={assignmentTableHeaders} />}
+            />
+            <Route
+              exact path="/tutorials"
+              render={(props) => <ContentTable {...props} resourceUrl="tutorial_note" tableHeaders={tutorialTableHeaders} />}
+            />
+            {/*
+              <Route exact path="/assignments" component={ContentTable} />
             <Route exact path="/tutorials" component={ContentTable} />
+            */}
+            
             <Route exact path="/staff"/>
             {/*
             <Route
