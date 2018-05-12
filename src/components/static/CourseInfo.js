@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 class CourseInfo extends Component {
 
@@ -9,28 +8,22 @@ class CourseInfo extends Component {
 
     this.fetchData = this.fetchData.bind(this);
 
-    const url = '/course/' + props.resourceUrl || '' + '?format=json';
-    console.log('request to:', url);
-    this.fetchData(url);
+    console.log('request to:', props.resourceUrl);
+    this.fetchData(props.resourceUrl);
 
   }
 
   fetchData(url) {
     const self = this;
-    axios({
-      method: 'get',
-      url: url
-    })
-      .then(function (response) {
-        
-        console.log(response);
-        self.setState({ infoItems:response.data });
-
+    fetch(url)
+      .then((response) => response.json())
+      .then(function(data){
+        console.log(data);
+        self.setState({ infoItems: data });
       })
       .catch(function (error) {
         console.log(error);
-        //self.setState({ error: error.response.data });
-
+        self.setState({ error: error.toString()});
       });
   }
 
@@ -85,7 +78,7 @@ class CourseInfo extends Component {
 
       );
     }
-    console.log(infoItem);
+    //console.log(infoItem);
     const courseName = infoItem && infoItem.courseName && infoItem.courseCode ? (
       <h2>{infoItem.courseName} {infoItem.courseCode}</h2>
     ):(<div></div>);

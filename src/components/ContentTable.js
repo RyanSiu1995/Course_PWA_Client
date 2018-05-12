@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import axios from 'axios';
 import DownloadableCheckBox from './DownloadableCheckBox';
 
 class ContentTable extends Component {
@@ -10,29 +9,22 @@ class ContentTable extends Component {
     this.state = { tableItems: [] };
 
     this.fetchData = this.fetchData.bind(this);
-
-    const url = '/course/' + props.resourceUrl || '' + '?format=json';
-    console.log(url);
-    this.fetchData(url);
+    console.log('request url:', props.resourceUrl);
+    this.fetchData(props.resourceUrl);
 
   }
 
   fetchData(url) {
     const self = this;
-    axios({
-      method: 'get',
-      url: url
-    })
-      .then(function (response) {
-
-        console.log(response);
-        self.setState({ tableItems: response.data });
-
+    fetch(url)
+      .then((response) => response.json())
+      .then(function(data){
+        console.log(data);
+        self.setState({ tableItems: data });
       })
       .catch(function (error) {
         console.log(error);
-        self.setState({ error: error.response.data });
-
+        self.setState({ error: error.toString()});
       });
   }
 
@@ -65,8 +57,8 @@ class ContentTable extends Component {
             </tr>
           </thead>
           <tbody>
-          {  tableItems && tableItems.map(item => {
-            return (
+            {tableItems && tableItems.map(item => {
+              return (
                 <tr>
                   {tableHeaders.map(tableHeader => {
                     return (
@@ -75,8 +67,8 @@ class ContentTable extends Component {
                   })}
                   <td><DownloadableCheckBox id={item.id + '_' + this.props.resourceUrl} /></td>
                 </tr>
-            );
-          })}
+              );
+            })}
 
           </tbody>
 

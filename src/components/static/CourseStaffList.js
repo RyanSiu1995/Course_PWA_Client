@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import CourseStaffItem from './CourseStaffItem';
 
 class CourseStaffList extends Component {
@@ -10,7 +9,7 @@ class CourseStaffList extends Component {
 
     this.fetchData = this.fetchData.bind(this);
 
-    const url = '/course/' + 'teaching_staff' || '' + '?format=json';
+    const url = '/api/staff';
     console.log('request to:', url);
     this.fetchData(url);
 
@@ -18,20 +17,15 @@ class CourseStaffList extends Component {
 
   fetchData(url) {
     const self = this;
-    axios({
-      method: 'get',
-      url: url
-    })
-      .then(function (response) {
-
-        console.log(response);
-        self.setState({ staffItems: response.data });
-
+    fetch(url)
+      .then((response) => response.json())
+      .then(function(data){
+        console.log(data);
+        self.setState({ staffItems: data });
       })
       .catch(function (error) {
         console.log(error);
-        self.setState({ error: error.response.data });
-
+        self.setState({ error: error.toString()});
       });
   }
 
@@ -39,7 +33,7 @@ class CourseStaffList extends Component {
   render() {
     const { staffItems, error } = this.state;
     const infoHeaders = this.props.infoHeaders;
-    console.log(staffItems);
+    //console.log(staffItems);
 
     if (error) {
       return (

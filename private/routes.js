@@ -3,7 +3,7 @@ const axios = require('axios');
 module.exports = (app, serverAddress) => {
   app.get('/api/info', function (req, res) {
 
-    axios.get(serverAddress + '/course_info/?format=json')
+    axios.get(serverAddress + '/courseInfo/?format=json')
       .then(function (response) {
         console.log(response.data);
         res.json(response.data);

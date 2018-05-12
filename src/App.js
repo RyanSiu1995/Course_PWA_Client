@@ -45,25 +45,25 @@ class App extends Component {
             <Route path="/"/>  {/* make course info page default option*/}
             <Route
               exact path="/"
-              render={(props) => <CourseInfo{...props} resourceUrl="courseInfo" infoHeaders={courseInfoHeaders} />}
+              render={(props) => <CourseInfo{...props} resourceUrl="/api/info" infoHeaders={courseInfoHeaders} />}
             />
 
             <Route
               exact path="/info"
-              render={(props) => <CourseInfo{...props} resourceUrl="courseInfo" infoHeaders={courseInfoHeaders} />}
+              render={(props) => <CourseInfo{...props} resourceUrl="/api/info" infoHeaders={courseInfoHeaders} />}
             />
 
             <Route
               exact path="/lectures"
-              render={(props) => <ContentTable {...props} resourceUrl="lt_note" tableHeaders={lectureTableHeaders} />}
+              render={(props) => <ContentTable {...props} resourceUrl="/api/lectures" tableHeaders={lectureTableHeaders} />}
             />
             <Route
               exact path="/assignments"
-              render={(props) => <ContentTable {...props} resourceUrl="assignment" tableHeaders={assignmentTableHeaders} />}
+              render={(props) => <ContentTable {...props} resourceUrl="/api/assignments" tableHeaders={assignmentTableHeaders} />}
             />
             <Route
               exact path="/tutorials"
-              render={(props) => <ContentTable {...props} resourceUrl="tutorial_note" tableHeaders={tutorialTableHeaders} />}
+              render={(props) => <ContentTable {...props} resourceUrl="/api/tutorials" tableHeaders={tutorialTableHeaders} />}
             />
             <Route exact path="/staff" component={CourseStaffList}/>
 
