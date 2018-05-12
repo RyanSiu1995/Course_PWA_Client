@@ -11,6 +11,13 @@ const backendAPIAddress = (function(){
         return 'http://127.0.0.1:8000/course';
     }
 }());
+const backendWSAddress = (function(){
+    if (process.env.NODE_ENV === 'production') {
+        return 'ws://backend:80/ws/';
+    } else {
+        return 'ws://127.0.0.1:8000/ws/';
+    }
+}()); 
 console.log('backendAddress:', backendAPIAddress)
 
 
@@ -110,7 +117,7 @@ const clientconnection = function() {
         });
     });
     // Start the connection to websocket
-    client.connect('ws://backend:80/ws/');
+    client.connect(backendWSAddress);
 }
 
 clientconnection();
