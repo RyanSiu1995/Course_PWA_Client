@@ -3,9 +3,13 @@ backend:
   expose:
     - "80"
   command: python manage.py runserver 0.0.0.0:80
+  ports:
+    - "80:80"
 web:
   build: .
   command: node private/server.js
+  environment:
+    - NODE_ENV=production
   links:
     - backend
   ports: 
