@@ -1,3 +1,5 @@
 django
 channels
 djangorestframework
+websocket
+websocket-client
