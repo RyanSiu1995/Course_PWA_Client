@@ -4,6 +4,18 @@ workbox.precaching.precacheAndRoute([]);
 
 workbox.strategies.networkFirst();
 
+workbox.routing.registerRoute(
+    new RegExp('/api/'),
+    workbox.strategies.networkFirst({
+        cacheName: 'information-caching',
+        plugins: [
+            new workbox.cacheableResponse.Plugin({
+                statuses: [0, 200]
+            })
+        ]
+    })
+);
+
 // Adding the listener to the push event
 self.addEventListener('push', function(e) {
     // TODO Handle the notification push
