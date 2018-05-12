@@ -1,6 +1,19 @@
 'use strict';
 const express = require('express');
+const axios = require('axios');
+
 const port = 8080;
+
+const backendAPIAddress = (function(){
+    if (process.env.NODE_ENV === 'production') {
+        return 'http://0.0.0.0:80/course';
+    } else {
+        return 'http://127.0.0.1:8000/course';
+    }
+}());
+console.log('backendAddress:', backendAPIAddress)
+
+
 var app = express();
 // WebSocket for notification push
 var WebSocketClient = require('websocket').client;
@@ -34,32 +47,42 @@ app.get('/go', function(req, res) {
             auth: "1gDbmdI151x3KTV+5LxZig=="
         }
     };
-    
+    webpush.sendNotification(
+            pushSubscription,
+            'hello'
+        ).then(res => {
+            console.log(res);
+        })
+        .catch(res => {
+            console.log(res);
+        });
     res.send('hello');
 });
 
-app.listen(port, function() {
+require('./routes.js')(app, backendAPIAddress);  // connect to client routes
+
+app.listen(port, function () {
     console.log('Server is now running at ' + port);
 });
 
-client.on('connectFailed', function(error) {
+client.on('connectFailed', function (error) {
     console.log('Connect Error: ' + error.toString());
 });
- 
-client.on('connect', function(connection) {
+
+client.on('connect', function (connection) {
     console.log('Backend WebSocket Client Connected');
     // Globalize the connection
     socketConnection = connection;
-    
-    connection.on('error', function(error) {
+
+    connection.on('error', function (error) {
         console.log("Connection Error: " + error.toString());
     });
-    
-    connection.on('close', function() {
+
+    connection.on('close', function () {
         console.log('Connection Closed');
     });
 
-    connection.on('message', function(message) {
+    connection.on('message', function (message) {
         // TODO receive the server push
         if (message.type === 'utf8') {
             console.log(message);
@@ -82,7 +105,7 @@ client.on('connect', function(connection) {
             });
         }
     });
-    
+
     function sendToServer() {
         if (connection.connected) {
             const pushSubscription = {
@@ -99,4 +122,3 @@ client.on('connect', function(connection) {
 });
 // Start the connection to websocket
 client.connect('ws://backend:80/ws/');
-

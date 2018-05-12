@@ -15,6 +15,7 @@ import {
 import DownloadableModal from './DownloadableModal';
 import NavItems from './NavItems';
 
+
 export default class MainNavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -38,18 +39,21 @@ export default class MainNavBar extends React.Component {
       <div>
         <Navbar color="dark" dark expand="md">
 
-          <NavbarBrand>
+
+          {/*
+            <NavbarBrand>
             <DownloadableModal buttonLabel="Offline" />
           </NavbarBrand>
+          */}
           
-
+          
           <NavbarBrand href="/">{this.props.brandName}</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
 
           <Collapse isOpen={this.state.isOpen} navbar>
 
             <Nav className="mr-auto" navbar>
-              <NavItems  />
+              <NavItems navItems={this.props.navItems}/>
             </Nav>
 
           </Collapse>

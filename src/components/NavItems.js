@@ -9,7 +9,7 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
-
+/*
 const navItems = [{
   name: 'L1'
 },
@@ -20,12 +20,13 @@ const navItems = [{
   name: 'L3',
   dropDrownItems: ['DropdownItem1', 'DropdownItem2', 'DropdownItem3']
 }];
+*/
 
 function renderItem(navItem){
   if (!navItem.dropDrownItems) {
     return (
       <NavItem key={navItem.name} >
-        <NavLink href="#"> {navItem.name} </NavLink>
+        <NavLink href={'/' + navItem.route}> {navItem.name} </NavLink>
       </NavItem>
     );
   } else {
@@ -47,10 +48,10 @@ function renderItem(navItem){
   }
 }
 
-const NavItems = () => {
+const NavItems = (props) => {
   //console.log(navItems);
   return (
-    navItems.map(renderItem)
+    props.navItems.map(renderItem)
   );
 
 };
