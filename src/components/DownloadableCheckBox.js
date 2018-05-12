@@ -4,27 +4,23 @@ import React from 'react';
 class DownloadableCheckBox extends React.Component {
   constructor(props) {
     super(props);
+
+    const initialValue = props.initialChecked? true: false;
     this.state = {
-      checked: false,
+      checked: initialValue,
     };
 
     this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
+    const { handleCheckboxChange, table, label } = this.props;
     this.setState({
       checked: !this.state.checked,
     });
+    //console.log('checkbox ', label, 'toggled');
+    handleCheckboxChange(table, label);
   }
-
-  /*
-  return (
-      <div className="custom-control custom-checkbox">
-      <input type="checkbox" name={this.props.name} onChange={this.toggle} checked={this.state.checked} className="custom-control-input" id={this.props.id} />
-      <label className="custom-control-label" style={style} htmlFor={this.props.id}>{ this.props.text || '' }</label>    
-      </div>
-    );
-  */ 
 
   render() {
     return (
