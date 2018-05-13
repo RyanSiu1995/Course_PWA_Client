@@ -54,20 +54,6 @@
                     console.error('Unable to subscribe to push', e);
                   }
                 });
-              } else {
-                // TODO will be removed in production
-                const subObj = {
-                  endpoint: sub.endpoint,
-                  pd256dh: arrayBufferToBase64(sub.getKey('p256dh')),
-                  auth: arrayBufferToBase64(sub.getKey('auth'))
-                };
-                $.ajax({
-                  type: 'POST',
-                  url: 'subscribe',
-                  data: subObj
-                }).then(res => {
-                  console.log(res);
-                })
               }
             })
           })

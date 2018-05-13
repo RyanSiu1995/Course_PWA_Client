@@ -93,27 +93,31 @@ const clientconnection = function() {
         });
     
         connection.on('message', function (message) {
-            console.log('message coming');
-            // TODO receive the server push
+            // TODO receive the server messaging
             if (message.type === 'utf8') {
-                console.log(message);
-                // const body = JSON.parse(message.utf8Data);
-                // const pushSubscription = {
-                //     endpoint: body.endpoint,
-                //     keys: {
-                //         p256dh: body.p256dh,
-                //         auth: body.auth
-                //     }
-                // };
-                // webpush.sendNotification(
-                //     pushSubscription,
-                //     body.message
-                // ).then(res => {
-                //     console.log(res);
-                // })
-                // .catch(res => {
-                //     console.log(res);
-                // });
+                const body = JSON.parse(message.utf8Data);
+                if (body.push) {
+                    // Create a push notification
+                    const pushSubscription = {
+                        endpoint: body.endpoint,
+                        keys: {
+                            p256dh: body.p256dh,
+                            auth: body.auth
+                        }
+                    };
+                    webpush.sendNotification(
+                        pushSubscription,
+                        body.notification
+                    ).then(res => {
+                        console.log(res);
+                    })
+                    .catch(res => {
+                        console.log(res);
+                    });
+                } else {
+                    // Print the system message
+                    console.log(body.message)
+                }
             }
         });
         function sendToServer() {
