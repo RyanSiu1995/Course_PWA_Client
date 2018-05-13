@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Nav,
   NavItem,
   NavLink,
   UncontrolledDropdown,
@@ -9,18 +8,6 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
-/*
-const navItems = [{
-  name: 'L1'
-},
-{
-  name: 'L2'
-},
-{
-  name: 'L3',
-  dropDrownItems: ['DropdownItem1', 'DropdownItem2', 'DropdownItem3']
-}];
-*/
 
 function renderItem(navItem){
   if (!navItem.dropDrownItems) {

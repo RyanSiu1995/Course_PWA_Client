@@ -4,15 +4,9 @@ import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  Nav
 } from 'reactstrap';
-import DownloadableModal from './DownloadableModal';
+
 import NavItems from './NavItems';
 
 
@@ -39,14 +33,6 @@ export default class MainNavBar extends React.Component {
       <div>
         <Navbar color="dark" dark expand="md">
 
-
-          {/*
-            <NavbarBrand>
-            <DownloadableModal buttonLabel="Offline" />
-          </NavbarBrand>
-          */}
-          
-          
           <NavbarBrand href="/">{this.props.brandName}</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
 

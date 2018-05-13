@@ -94,7 +94,6 @@ class ContentTable extends Component {
     }
 
     return (
-
       <div className="container">
 
         <Table striped style={tableStyle} >
@@ -105,6 +104,7 @@ class ContentTable extends Component {
                   <th>{tableHeader}</th>
                 );
               })}
+              <th>Link</th>
               <th>Offline</th>
             </tr>
           </thead>
@@ -117,6 +117,7 @@ class ContentTable extends Component {
                       <td>{item[tableHeader] || '--'}</td>
                     );
                   })}
+                  <td><a href="/files/test.pdf">PDF</a></td>
                   <td>
                     <DownloadableCheckBox 
                     id={item.id + '_' + this.resourceUrl}

@@ -29,9 +29,9 @@ const navItems = [{
 
 const courseInfoHeaders = ['courseName', 'courseCode', 'description', 'assesment'];
 
-const lectureTableHeaders = ['name', 'date', 'upload'];
-const assignmentTableHeaders = ['name', 'submissionDate', 'upload'];
-const tutorialTableHeaders = ['name', 'date', 'upload'];
+const lectureTableHeaders = ['name', 'date'];
+const assignmentTableHeaders = ['name', 'submissionDate'];
+const tutorialTableHeaders = ['name', 'date'];
 
 
 class App extends Component {

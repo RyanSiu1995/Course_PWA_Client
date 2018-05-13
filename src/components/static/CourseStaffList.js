@@ -32,7 +32,6 @@ class CourseStaffList extends Component {
 
   render() {
     const { staffItems, error } = this.state;
-    const infoHeaders = this.props.infoHeaders;
     //console.log(staffItems);
 
     if (error) {

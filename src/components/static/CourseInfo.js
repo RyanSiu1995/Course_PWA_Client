@@ -65,7 +65,6 @@ class CourseInfo extends Component {
   render() {
     const { infoItems, error } = this.state;
     const infoItem = infoItems[0];
-    const infoHeaders = this.props.infoHeaders;
 
     if (error) {
       return (
