@@ -19,6 +19,7 @@ workbox.routing.registerRoute(
 // Adding the listener to the push event
 self.addEventListener('push', function(e) {
     // TODO Handle the notification push
+    console.log('Notification push detected: ', e.data.text());
     e.waitUntil(
         self.registration.showNotification(e.data.text())
     );
