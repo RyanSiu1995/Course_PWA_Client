@@ -4,6 +4,10 @@ from courseDetails.serializers import *
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+import json
 
 # Create your views here.
 class AssignmentViewSet(viewsets.ModelViewSet):
@@ -27,6 +31,16 @@ class NotificationViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             cursor = Notification.objects.create(**serializer.validated_data)
             cursor.save()
+            # Raise the notification push
+            channel_layer = get_channel_layer()
+            messageToWS = {
+                'type': 'chat_message',
+                'message': request.data.get('message')
+            }
+            async_to_sync(channel_layer.group_send)(
+                'broadcast',
+                messageToWS
+            )
             return Response(
                 serializer.validated_data, status=status.HTTP_201_CREATED
             )

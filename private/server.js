@@ -93,6 +93,7 @@ const clientconnection = function() {
         });
     
         connection.on('message', function (message) {
+            console.log('message coming');
             // TODO receive the server push
             if (message.type === 'utf8') {
                 console.log(message);
@@ -115,6 +116,13 @@ const clientconnection = function() {
                 // });
             }
         });
+        function sendToServer() {
+            if (connection.connected) {
+                var number = Math.round(Math.random() * 0xFFFFFF);
+                connection.sendUTF(number.toString());
+            }
+        }
+        sendToServer();
     });
     // Start the connection to websocket
     client.connect(backendWSAddress);
