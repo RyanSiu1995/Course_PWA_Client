@@ -1,5 +1,4 @@
 django
 channels
 djangorestframework
-websocket
-websocket-client
+channels_redis

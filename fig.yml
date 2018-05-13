@@ -3,6 +3,8 @@ backend:
   expose:
     - "80"
   command: python manage.py runserver 0.0.0.0:80
+  links:
+    - redis
   ports:
     - "80:80"
 web:
@@ -14,3 +16,7 @@ web:
     - backend
   ports: 
     - "8080:8080"
+redis:
+  image: redis:2.8
+  expose: 
+    - "6379"
