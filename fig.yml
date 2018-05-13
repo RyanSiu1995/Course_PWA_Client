@@ -7,6 +7,8 @@ backend:
     - redis
   ports:
     - "80:80"
+  environment:
+    - ENV=production
 web:
   build: .
   command: node private/server.js
