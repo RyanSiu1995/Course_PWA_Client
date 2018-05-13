@@ -12,5 +12,6 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
-  "gcm_sender_id": "821529585994"
+  "gcm_sender_id": "821529585994",
+  "fcm_sender_id": "821529585994"
 }
