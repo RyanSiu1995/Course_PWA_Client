@@ -1,20 +1,26 @@
-backend:
-  build: ./backend
-  expose:
-    - "80"
-  command: python manage.py runserver 0.0.0.0:80
-web:
-  build: .
-  command: node private/server.js
-backend:
-  build: ./backend
-  expose:
-    - "80"
-  command: python manage.py runserver 0.0.0.0:80
-web:
-  build: .
-  command: node private/server.js
-  links:
-    - backend
-  ports: 
-    - "8080:8080"
+version: '2'
+services:
+  backend:
+    build: ./backend
+    expose:
+      - "80"
+    command: python manage.py runserver 0.0.0.0:80
+    links:
+      - redis
+    ports:
+      - "80:80"
+    environment:
+      - ENV=production
+  web:
+    build: .
+    command: node private/server.js
+    environment:
+      - NODE_ENV=production
+    links:
+      - backend
+    ports: 
+      - "8080:8080"
+  redis:
+    image: redis:2.8
+    expose: 
+      - "6379"
