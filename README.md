@@ -42,7 +42,7 @@ node ./private/server.js
 ```
 Finally, you can get the application in http://localhost:8080. 
 
-### Running with Docker
+### Running with Docker (Recommended)
 The building in the application with docker is much easier. Everything will set up for you after the deployment is completed. Please note that you can also integrate your own Firebase Service before launching the server.
 #### Prerequisites
 The following command is required for the local deployment.
@@ -78,6 +78,7 @@ This application is built with the following libraries/frameworks.
     * SQLite3
 ## Authors
 * Siu Long Wa
+
 Take a look at the list of [contributors](https://github.com/RyanSiu1995/Course_Webpage_PWA_Client/graphs/contributors) who participated in this project for details.
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
