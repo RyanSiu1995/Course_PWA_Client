@@ -1,5 +1,7 @@
 # Course Webpage with PWA Design
 This is a project from CSCI4140 in CUHK. We hope to explore the possibility in progressive web apps. A simple course webpage is redesigned with PWA architecture. For the detailed information in this project, please read [this document](./information.md).
+
+Slides: https://docs.google.com/presentation/d/1e2a78rGtXsk4epFLcBkSw0t4pOmqoSCiFQhVf0fg1dY/edit?usp=sharing
 ## Getting Started
 This project is built with two tiers architecture. The frontend is built with ReactJS. The backend server is built with the Django with REST framework. There is a proxy server built with ExpressJS for the communication between client and backend server.
 ### Running locally
