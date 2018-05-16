@@ -45,26 +45,6 @@ app.post('/subscribe', function(req, res) {
     res.send('Subscribed');
 });
 
-app.get('/go', function(req, res) {
-    const pushSubscription = {
-        endpoint: 'https://android.googleapis.com/gcm/send/fjeF6OZWG2Y:APA91bFXFQT-PrVYU1RCZwPSvq3vLFnTg78PH3Khu92fyOa8CwFJVj-rSBruEuY8vC8i1dQOTPLDGL3ealL5HxID0C1Tt-r7QLWowiWXLxPqF0ZxleEj4uEgzXYluVdOtpgZNuD-ai6G',
-        keys: {
-            p256dh: "BArxCil4sJ+gJECjRGUyfqA1AnNKRHfzTdOxt5TIP9f8B6YaezXYtLQ8EK1T0WFsY5OemlKHbMOP4/5v4U8MKJE=",
-            auth: "1gDbmdI151x3KTV+5LxZig=="
-        }
-    };
-    webpush.sendNotification(
-            pushSubscription,
-            'hello'
-        ).then(res => {
-            console.log(res);
-        })
-        .catch(res => {
-            console.log(res);
-        });
-    res.send('hello');
-});
-
 require('./routes.js')(app, backendAPIAddress);  // connect to client routes
 
 app.listen(port, function () {

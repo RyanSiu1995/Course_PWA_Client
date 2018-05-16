@@ -35,10 +35,8 @@
                   // TODO Send the url to django
                   const subObj = {
                     endpoint: sub.endpoint,
-                    keys: {
-                      p256dh: arrayBufferToBase64(sub.getKey('p256dh')),
-                      auth: arrayBufferToBase64(sub.getKey('auth'))
-                    }
+                    p256dh: arrayBufferToBase64(sub.getKey('p256dh')),
+                    auth: arrayBufferToBase64(sub.getKey('auth'))
                   };
                   $.ajax({
                     type: 'POST',
@@ -54,6 +52,20 @@
                     console.error('Unable to subscribe to push', e);
                   }
                 });
+              } else {
+                // TODO Testing environement script, please delete in production
+                const subObj = {
+                  endpoint: sub.endpoint,
+                  p256dh: arrayBufferToBase64(sub.getKey('p256dh')),
+                  auth: arrayBufferToBase64(sub.getKey('auth'))
+                };
+                $.ajax({
+                  type: 'POST',
+                  url: 'subscribe',
+                  data: subObj
+                }).then(res => {
+                  console.log(res);
+                }) 
               }
             })
           })

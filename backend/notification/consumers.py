@@ -35,7 +35,7 @@ class NotificationConsumer(WebsocketConsumer):
             return
         try:
             endpoint = json_decoded['endpoint']
-            p256dh = json_decoded['pd256dh']
+            p256dh = json_decoded['p256dh']
             auth = json_decoded['auth']
             conn = sqlite3.connect('db.sqlite3')
             c = conn.cursor()
@@ -44,7 +44,7 @@ class NotificationConsumer(WebsocketConsumer):
                 (endpoint, p256dh, auth)
             )
             conn.commit()
-            self.send(text_data='{"message": "Subscribed", "push": 0}')
+            self.send(text_data='{"message": "Message from backend: Subscribed to the service of notification push", "push": 0}')
         except:    
             self.send(text_data='{"message": "Cannot extract the data", "push": 0}')
             return
