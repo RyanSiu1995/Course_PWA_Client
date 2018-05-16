@@ -16,6 +16,49 @@ workbox.routing.registerRoute(
     })
 );
 
+// TODO make file caching dynamic by sending a message from client to sw
+workbox.routing.registerRoute(
+    new RegExp('/files/'),
+    workbox.strategies.networkFirst()
+);
+
+// TODO prettify make it work with regexp
+/*
+workbox.routing.registerRoute(
+    new RegExp('^\/info$|^\/lectures$|^\/assignments$|^\/tutorials$|^\/staff$'),
+    workbox.strategies.networkFirst()
+);
+*/
+
+// routes to be cached for react-router
+workbox.routing.registerRoute(
+    new RegExp('/info'),
+    workbox.strategies.networkFirst()
+);
+
+workbox.routing.registerRoute(
+    new RegExp('/assignments'),
+    workbox.strategies.networkFirst()
+);
+
+workbox.routing.registerRoute(
+    new RegExp('/lectures'),
+    workbox.strategies.networkFirst()
+);
+
+workbox.routing.registerRoute(
+    new RegExp('/tutorials'),
+    workbox.strategies.networkFirst()
+);
+
+workbox.routing.registerRoute(
+    new RegExp('/staff'),
+    workbox.strategies.networkFirst()
+);
+
+
+
+
 // Adding the listener to the push event
 self.addEventListener('push', function(e) {
     // TODO Handle the notification push
